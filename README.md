@@ -2,7 +2,7 @@
 
 An Employee Directory application migrated from a simulated on-premises server to AWS, using EC2 as the source, Amazon RDS as the target, and AWS DMS to move the data.
 
-![Architecture diagram](./screenshots/architecture-diagram.png)
+![Architecture diagram](./architecture-diagram.png)
 
 ## What this demonstrates
 
@@ -22,13 +22,13 @@ An Employee Directory application migrated from a simulated on-premises server t
 5. Verified the migrated data matched the source exactly
 6. Cut the running application over to RDS
 
-![App running against the migrated database](./screenshots/app-ui.png)
+![App running against the migrated database](./app-ui.png)
 *Employee Directory running post-migration.*
 
-![DMS migration task, load completed](./screenshots/dms-task-complete.png)
+![DMS migration task, load completed](./dms-task-complete.png)
 *Migration task at 100%, load completed.*
 
-![Migrated data verified in RDS](./screenshots/rds-data-verified.png)
+![Migrated data verified in RDS](./rds-data-verified.png)
 *Direct query against RDS confirming all rows migrated intact.*
 
 ## Troubleshooting
@@ -38,7 +38,7 @@ A clean run-through would have taken under an hour. Getting the networking and a
 **MySQL only listening on `127.0.0.1`, unreachable from any other machine.**
 Ubuntu's MySQL package binds to localhost only by default. Invisible in local development, since app and database share a machine — it only becomes a problem once a separate machine (the DMS replication instance) needs to reach it. Fixed with `bind-address = 0.0.0.0`.
 
-![Confirming the bind-address fix](./screenshots/bind-address-fix.png)
+![Confirming the bind-address fix](./bind-address-fix.png)
 *`ss -tlnp` confirming MySQL now listening on all interfaces, not just localhost.*
 
 **DMS timeouts traced to a security group that wasn't actually attached to the instance.**
